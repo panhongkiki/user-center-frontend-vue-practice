@@ -29,6 +29,7 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 npm install
 npm install axios
 npm i --save ant-design-vue@latest
+npm install pinia @vue/devtools-api
 ```
 
 ### Compile and Hot-Reload for Development
