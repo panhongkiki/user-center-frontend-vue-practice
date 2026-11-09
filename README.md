@@ -30,6 +30,7 @@ npm install
 npm install axios
 npm i --save ant-design-vue@latest
 npm install pinia @vue/devtools-api
+npm install dayjs
 ```
 
 ### Compile and Hot-Reload for Development
