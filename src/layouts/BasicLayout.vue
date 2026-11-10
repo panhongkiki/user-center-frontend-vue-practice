@@ -1,11 +1,14 @@
 <script lang="ts">
-import GlobalHeader from '@/components/GlobalHeader.vue';
+import { getCurrentUser, userRegister } from '@/api/user'
+import GlobalHeader from '@/components/GlobalHeader.vue'
 export default {
     components: {
         GlobalHeader,
     },
     setup() {
-
+        // getCurrentUser().then(res => {
+        //     console.log(res)
+        // })
         return {
 
         }
@@ -19,7 +22,9 @@ export default {
             <a-layout-header class="header">
                 <GlobalHeader />
             </a-layout-header>
-            <a-layout-content class="content">Content</a-layout-content>
+            <a-layout-content class="content">
+                <RouterView />
+            </a-layout-content>
             <a-layout-footer class="footer">
                 <a href="https://www.douyin.com" target="_blank">About</a>
             </a-layout-footer>
@@ -27,12 +32,13 @@ export default {
     </div>
 </template>
 <style scoped>
-#basicLayout .header{
+#basicLayout .header {
     background-color: white;
-    margin-bottom:16px;
-    color:unset;
+    margin-bottom: 16px;
+    color: unset;
     padding-inline: 20px;
 }
+
 #basicLayout .content {
     padding: 20px;
     margin-bottom: 20px;

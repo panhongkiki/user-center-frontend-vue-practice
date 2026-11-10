@@ -1,6 +1,6 @@
 {
   "name": "user-center-frontend-vue",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,7 +11,11 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@vue/devtools-api": "^8.2.1",
     "ant-design-vue": "^4.2.6",
+    "axios": "^1.21.0",
+    "dayjs": "^1.11.23",
+    "pinia": "^4.1.0",
     "vue": "^3.5.42",
     "vue-router": "^5.3.1"
   },

@@ -1,10 +1,16 @@
 <script lang="ts">
+import { useRouter } from 'vue-router'
 import { h, ref } from 'vue'
 import { HomeOutlined, CrownOutlined, UserOutlined, UserAddOutlined, YoutubeOutlined } from '@ant-design/icons-vue'
 import type { MenuProps } from 'ant-design-vue'
+import { useLoginUserStore } from '@/store/useLoginUserStore'
 export default {
     setup() {
-        const current = ref<string[]>(['mail'])
+        const router = useRouter()
+        const current = ref<string[]>([''])
+        router.afterEach((to, from, failure) => {
+            current.value = [to.path]
+        })
         const items = ref<MenuProps['items']>([
             {
                 key: '/',
@@ -40,9 +46,18 @@ export default {
                 title: 'youtube',
             }
         ])
+        // 点击菜单后路由跳转事件
+        const onMenuClick = ({ key }: { key: string }) => {
+            router.push({
+                path: key,
+            })
+        }
+        const loginUserStore = useLoginUserStore()
         return {
             current,
             items,
+            onMenuClick,
+            loginUserStore
         }
     }
 
@@ -59,10 +74,15 @@ export default {
                 </div>
             </a-col>
             <a-col flex="auto">
-                <a-menu v-model:selectedKeys="current" mode="horizontal" :items="items" />
+                <a-menu v-model:selectedKeys="current" mode="horizontal" :items="items" @click="onMenuClick" />
             </a-col>
             <a-col flex="80px">
-                <a-button type="primary">登录</a-button>
+                <div class="userLoginStatus" v-if="loginUserStore.loginUser.id">
+                    {{ loginUserStore.loginUser.username ?? 'jcc' }}
+                </div>
+                <div v-else>
+                    <a-button type="primary" href="/user/login">登录</a-button>
+                </div>
             </a-col>
         </a-row>
     </div>
