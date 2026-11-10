@@ -1,6 +1,6 @@
 # user-center-frontend-vue
 
-This template should help get you started developing with Vue 3 in Vite.
+使用了vite、vue-router、axios、ant-design-vue等前端技术栈
 
 ## Recommended IDE Setup
 
@@ -27,6 +27,10 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 
 ```sh
 npm install
+npm install axios
+npm i --save ant-design-vue@latest
+npm install pinia @vue/devtools-api
+npm install dayjs
 ```
 
 ### Compile and Hot-Reload for Development
