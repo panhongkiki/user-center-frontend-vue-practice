@@ -4,16 +4,18 @@ import { reactive } from 'vue'
 import { message } from 'ant-design-vue'
 import router from '@/router'
 interface FormState {
-    account: string;
-    password: string;
+    userAccount: string;
+    userPassword: string;
     checkPassword: string,
+    planetCode: string,
 }
 export default {
     setup(props, ctx) {
         const formState = reactive<FormState>({
-            account: '',
-            password: '',
+            userAccount: '',
+            userPassword: '',
             checkPassword: '',
+            planetCode: '',
         })
         /**
          * 提交表单
@@ -21,20 +23,20 @@ export default {
          */
         const onFinish = async (values: any) => {
             // 前后密码不一致
-            if (formState.password !== formState.checkPassword) {
+            if (formState.userPassword !== formState.checkPassword) {
                 message.error('注册失败，前后密码不一致！')
                 return
             }
             const res = await userRegister(values)
             // 注册成功，就跳转到登录页面
-            if (res.data.code === 0 && res.data.data) {
+            if (res.data.code === 0 && res.data.data > 0) {
                 message.success('注册成功')
                 router.push({
                     path: '/user/login',
                     replace: true,
                 })
             } else {
-                message.error('注册失败，' + res.data.description)
+                message.error('注册失败，' + (res.data.description || res.data.message))
             }
         }
         return {
@@ -52,14 +54,17 @@ export default {
         <h2 class="title">用户注册</h2>
         <a-form :model="formState" name="basic" :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" autocomplete="off"
             @finish="onFinish" class="form" label-align="left">
-            <a-form-item label="账户名称" name="account" :rules="[{ required: true, message: '请输入账号！' }]">
-                <a-input v-model:value="formState.account" />
+            <a-form-item label="账户名称" name="userAccount" :rules="[{ required: true, message: '请输入账号！' }]">
+                <a-input v-model:value="formState.userAccount" />
             </a-form-item>
-            <a-form-item label="密码" name="password" :rules="[{ required: true, message: '请输入密码！' }]">
-                <a-input-password v-model:value="formState.password" />
+            <a-form-item label="密码" name="userPassword" :rules="[{ required: true, message: '请输入密码！' }]">
+                <a-input-password v-model:value="formState.userPassword" />
             </a-form-item>
-            <a-form-item label="确认密码" name="password" :rules="[{ required: true, message: '请再次输入密码！' }]">
+            <a-form-item label="确认密码" name="checkPassword" :rules="[{ required: true, message: '请再次输入密码！' }]">
                 <a-input-password v-model:value="formState.checkPassword" />
+            </a-form-item>
+            <a-form-item label="编号" name="planetCode" :rules="[{ required: true, message: '请输入编号！' }]">
+                <a-input v-model:value="formState.planetCode" />
             </a-form-item>
             <a-form-item :wrapper-col="{ offset: 10, span: 2 }">
                 <a-button type="primary" html-type="submit">注册</a-button>

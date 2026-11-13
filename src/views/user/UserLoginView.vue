@@ -5,15 +5,15 @@ import { useLoginUserStore } from '@/store/useLoginUserStore'
 import { message } from 'ant-design-vue'
 import router from '@/router'
 interface FormState {
-    account: string;
-    password: string;
+    userAccount: string;
+    userPassword: string;
 }
 export default {
     setup(props, ctx) {
         const loginUserStore = useLoginUserStore()
         const formState = reactive<FormState>({
-            account: '',
-            password: '',
+            userAccount: '',
+            userPassword: '',
         })
         /**
          * 提交表单
@@ -22,14 +22,14 @@ export default {
         const onFinish = async (values: any) => {
             const res = await userLogin(values)
             if (res.data.code === 0 && res.data.data) {
-                await loginUserStore.fetchLoginUser()
+                loginUserStore.setLoginUser(res.data.data)
                 message.success('登录成功')
                 router.push({
                     path: '/',
                     replace: true,
                 })
             } else {
-                message.error('注册失败，' + res.data.description)
+                message.error('登录失败，账号或密码错误')
             }
 
         }
@@ -48,11 +48,11 @@ export default {
         <h2 class="title">用户登录</h2>
         <a-form :model="formState" name="basic" :label-col="{ span: 4 }" :wrapper-col="{ span: 20 }" autocomplete="off"
             @finish="onFinish" class="form" label-align="left">
-            <a-form-item label="账户名称" name="account" :rules="[{ required: true, message: '请输入账号！' }]">
-                <a-input v-model:value="formState.account" />
+            <a-form-item label="账户名称" name="userAccount" :rules="[{ required: true, message: '请输入账号！' }]">
+                <a-input v-model:value="formState.userAccount" />
             </a-form-item>
-            <a-form-item label="密码" name="password" :rules="[{ required: true, message: '请输入密码！' }]">
-                <a-input-password v-model:value="formState.password" />
+            <a-form-item label="密码" name="userPassword" :rules="[{ required: true, message: '请输入密码！' }]">
+                <a-input-password v-model:value="formState.userPassword" />
             </a-form-item>
             <a-form-item :wrapper-col="{ offset: 10, span: 2 }">
                 <a-button type="primary" html-type="submit">登录</a-button>

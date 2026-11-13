@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { searchUsers, deleteUser } from '@/api/user'
 import { message } from 'ant-design-vue'
 import dayjs from 'dayjs'
@@ -69,6 +69,7 @@ export default {
                 message.error('获取数据失败，' + res.data.description)
             }
         }
+        onMounted(fetchData)
         return {
             columns,
             data,
@@ -77,15 +78,17 @@ export default {
             searchValue,
             onSearch,
             onDelete,
+            
         }
     }
+    
 }
 </script>
 <template>
     <div id="userManageView">
         <a-input-search v-model:value="searchValue" placeholder="input search text" style="width: 200px"
             @search="onSearch" />
-        <a-table :columns="columns" :data-source="data">
+        <a-table :columns="columns" :data-source="data" row-key="id">
             <template #bodyCell="{ column, record }">
                 <template v-if="column.dataIndex === 'avatarUrl'">
                     <img :src="record.avatarUrl" alt="avatar" :width="120">

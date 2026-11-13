@@ -52,7 +52,7 @@ export const getCurrentUser = async () => {
  */
 export const searchUsers = async (username: any) => {
     return myAxios.request({
-        url: '/api/userr/search',
+        url: '/api/user/search',
         method: 'GET',
         params: {
             username

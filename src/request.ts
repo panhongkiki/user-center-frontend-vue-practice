@@ -1,8 +1,8 @@
 import axios from "axios"
 
 const myAxios = axios.create({
-    baseURL: 'https://localhost:5173',
-    timeout: 1000,
+    baseURL: '',
+    timeout: 10000,
     headers: { 'X-Custom-Header': 'foobar' },
     withCredentials: true,
 })
